@@ -15,16 +15,16 @@ void TransformNode::AddChild(TransformNode *child) {
   }
 }
 TransformNode* TransformNode::RemoveChild(TransformNode *child) {
-  TransformNode *toReturn = nullptr;
-  std::vector<TransformNode *>::iterator itr = std::find(m_Children.begin(), m_Children.end(), child);
-  if (itr != m_Children.end()) {
-    toReturn = child;
+	TransformNode *toReturn = nullptr;
+	std::vector<TransformNode *>::iterator itr = std::find(m_Children.begin(), m_Children.end(), child);
+	if (itr != m_Children.end()) {
+		toReturn = child;
 
-    child->m_Parent = nullptr;
-    m_Children.erase(itr);
-  }
+		child->m_Parent = nullptr;
+		m_Children.erase(itr);
+	}
 
-  return toReturn;
+	return toReturn;
 }
 
 void TransformNode::DrawSelf(sf::RenderTarget *target, const sf::Transform &parentTransform) {

@@ -4,9 +4,9 @@
 int main(int argc, char *argv)
 {
 	//Initial Values
-	sf::Vector2<float> bodySize(100.0f, 400.0f);
+	sf::Vector2<float> bodySize(100.0f, 325.0f);
 	sf::Vector2<float> armSize(100.0f, 20.0f);
-	sf::Vector2<float> neckSize(50.0f, 25.0f);
+	sf::Vector2<float> neckSize(35.0f, 25.0f);
 	float headSize = 75.0f;
 	std::size_t headPoints = 60;
 
@@ -42,19 +42,57 @@ int main(int argc, char *argv)
   rightLowerArmRect.setOrigin(0, rightLowerArmRect.getSize().y / 2.0f);
   rightLowerArmRect.setPosition(rightLowerArmRect.getSize().x, 0);
   
+  //Set necks properties
+  neckRect.setPosition(0, -bodyRect.getSize().y);
+  neckRect.setOrigin(neckRect.getSize().x / 2.0f, neckRect.getSize().y);
+
+  //Set head properties
+  headCircle.setOrigin(headCircle.getLocalBounds().width / 2.0f, headCircle.getLocalBounds().height * 0.95f);
+  headCircle.setPosition(0, -neckRect.getSize().y);
+  
   //Create Nodes
   TransformNode bodyNode(&bodyRect);
   TransformNode	leftUpperArmNode(&leftUpperArmRect);
   TransformNode rightUpperArmNode(&rightUpperArmRect);
   TransformNode leftLowerArmNode(&leftLowerArmRect);
   TransformNode rightLowerArmNode(&rightLowerArmRect);
+  TransformNode neckNode(&neckRect);
+  TransformNode headNode(&headCircle);
 
   leftUpperArmNode.AddChild(&leftLowerArmNode);
 
   rightUpperArmNode.AddChild(&rightLowerArmNode);
 
+  neckNode.AddChild(&headNode);
+
   bodyNode.AddChild(&leftUpperArmNode);
   bodyNode.AddChild(&rightUpperArmNode);
+  bodyNode.AddChild(&neckNode);
+
+  //AngleStuff
+  int bodyMaxAngle = 40;
+  float bodyCurrAngle = bodyMaxAngle / 2.0f;
+  float bodyTargAngle = rand() / bodyMaxAngle;
+  
+  int rightUpArmMaxAngle = 140;
+  float rightUpArmCurrAngle = rightUpArmMaxAngle / 2.0f;
+  float rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+  
+  int leftUpArmMaxAngle = 140;
+  float leftUpArmCurrAngle = leftUpArmMaxAngle / 2.0f;
+  float leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+
+  int rightLowArmMaxAngle = 140;
+  float rightLowArmCurrAngle = rightUpArmMaxAngle / 2.0f;
+  float rightLowArmTargAngle = rand() % rightUpArmMaxAngle;
+
+  int leftLowArmMaxAngle = 140;
+  float leftLowArmCurrAngle = leftUpArmMaxAngle / 2.0f;
+  float leftLowArmTargAngle = rand() % leftUpArmMaxAngle;
+
+  //Angles "speeds"
+  float bodySpeed = 15.0f;
+  float angleSpeed = 75.0f;
 
   sf::Event evt;
   sf::Clock appTimer;
@@ -68,6 +106,139 @@ int main(int argc, char *argv)
     }
 
     // do stuff.
+	//Rotate the body
+	if (bodyCurrAngle < bodyTargAngle)
+	{
+		float currentRotate = bodySpeed * deltaTime;
+		bodyRect.rotate(currentRotate);
+		bodyCurrAngle += currentRotate;
+		if (bodyCurrAngle > bodyTargAngle)
+		{
+			bodyTargAngle = rand() % bodyMaxAngle;
+		}
+	}
+	else if (bodyCurrAngle > bodyTargAngle)
+	{
+		float currentRotate = -(bodySpeed * deltaTime);
+		bodyRect.rotate(currentRotate);
+		bodyCurrAngle += currentRotate;
+		if (bodyCurrAngle < bodyTargAngle)
+		{
+			bodyTargAngle = rand() % bodyMaxAngle;
+		}
+
+	}
+	else
+	{
+		bodyTargAngle = rand() % bodyMaxAngle;
+	}
+
+	//Rotate Right Upper Arm
+	if(rightUpArmCurrAngle < rightUpArmTargAngle)
+	{
+		float currentRotate = angleSpeed * deltaTime;
+		rightUpperArmRect.rotate(currentRotate);
+		rightUpArmCurrAngle += currentRotate;
+		if(rightUpArmCurrAngle > rightUpArmTargAngle)
+		{
+			rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+		}
+	} else if(rightUpArmCurrAngle > rightUpArmTargAngle)
+	{
+		float currentRotate = -(angleSpeed * deltaTime);
+		rightUpperArmRect.rotate(currentRotate);
+		rightUpArmCurrAngle += currentRotate;
+		if (rightUpArmCurrAngle < rightUpArmTargAngle)
+		{
+			rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+		}
+
+	} else
+	{
+		rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+	}
+
+	//Rotate Right Lowper Arm
+	if (rightLowArmCurrAngle < rightLowArmTargAngle)
+	{
+		float currentRotate = angleSpeed * deltaTime;
+		rightLowerArmRect.rotate(currentRotate);
+		rightLowArmCurrAngle += currentRotate;
+		if (rightLowArmCurrAngle > rightLowArmTargAngle)
+		{
+			rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+		}
+	}
+	else if (rightLowArmCurrAngle > rightLowArmTargAngle)
+	{
+		float currentRotate = -(angleSpeed * deltaTime);
+		rightLowerArmRect.rotate(currentRotate);
+		rightLowArmCurrAngle += currentRotate;
+		if (rightLowArmCurrAngle < rightLowArmTargAngle)
+		{
+			rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+		}
+
+	}
+	else
+	{
+		rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+	}
+
+	//Rotate Left Upper Arm
+	if (leftUpArmCurrAngle < leftUpArmTargAngle)
+	{
+		float currentRotate = angleSpeed * deltaTime;
+		leftUpperArmRect.rotate(currentRotate);
+		leftUpArmCurrAngle += currentRotate;
+		if (leftUpArmCurrAngle > leftUpArmTargAngle)
+		{
+			leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+		}
+	}
+	else if (leftUpArmCurrAngle > leftUpArmTargAngle)
+	{
+		float currentRotate = -(angleSpeed * deltaTime);
+		leftUpperArmRect.rotate(currentRotate);
+		leftUpArmCurrAngle += currentRotate;
+		if (leftUpArmCurrAngle < leftUpArmTargAngle)
+		{
+			leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+		}
+
+	}
+	else
+	{
+		leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+	}
+
+	//Rotate Left Lowper Arm
+	if (leftLowArmCurrAngle < leftLowArmTargAngle)
+	{
+		float currentRotate = angleSpeed * deltaTime;
+		leftLowerArmRect.rotate(currentRotate);
+		leftLowArmCurrAngle += currentRotate;
+		if (leftLowArmCurrAngle > leftLowArmTargAngle)
+		{
+			leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+		}
+	}
+	else if (leftLowArmCurrAngle > leftLowArmTargAngle)
+	{
+		float currentRotate = -(angleSpeed * deltaTime);
+		leftLowerArmRect.rotate(currentRotate);
+		leftLowArmCurrAngle += currentRotate;
+		if (leftLowArmCurrAngle < leftLowArmTargAngle)
+		{
+			leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+		}
+
+	}
+	else
+	{
+		leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+	}
+
     window.clear();
 
     //draw stuff
