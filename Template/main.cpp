@@ -25,6 +25,7 @@ int main(int argc, char *argv)
   //Set bodys properties
   bodyRect.setPosition(window.getSize().x / 2.0f, window.getSize().y);
   bodyRect.setOrigin(bodyRect.getSize().x / 2.0f, bodyRect.getSize().y);
+  bodyRect.setFillColor(sf::Color::Magenta);
 
   //Set left arms position
   leftUpperArmRect.setOrigin(leftUpperArmRect.getSize().x, leftUpperArmRect.getSize().y / 2.0f);
@@ -33,22 +34,26 @@ int main(int argc, char *argv)
 
   leftLowerArmRect.setOrigin(leftLowerArmRect.getSize().x, leftLowerArmRect.getSize().y / 2.0f);
   leftLowerArmRect.setPosition(-leftUpperArmRect.getSize().x, 0);
+  leftLowerArmRect.setFillColor(sf::Color::Cyan);
 
   //Set right arms properties
   rightUpperArmRect.setOrigin(0, rightUpperArmRect.getSize().y / 2.0f);
   rightUpperArmRect.setPosition(bodyRect.getLocalBounds().width/2.0f,-(bodyRect.getLocalBounds().height * 0.8f));
-  rightUpperArmRect.setFillColor(sf::Color::Blue);
+  rightUpperArmRect.setFillColor(sf::Color::Cyan);
   
   rightLowerArmRect.setOrigin(0, rightLowerArmRect.getSize().y / 2.0f);
   rightLowerArmRect.setPosition(rightLowerArmRect.getSize().x, 0);
-  
+  rightLowerArmRect.setFillColor(sf::Color::Cyan);
+
   //Set necks properties
   neckRect.setPosition(0, -bodyRect.getSize().y);
   neckRect.setOrigin(neckRect.getSize().x / 2.0f, neckRect.getSize().y);
+  neckRect.setFillColor(sf::Color::Magenta);
 
   //Set head properties
   headCircle.setOrigin(headCircle.getLocalBounds().width / 2.0f, headCircle.getLocalBounds().height * 0.95f);
   headCircle.setPosition(0, -neckRect.getSize().y);
+  headCircle.setFillColor(sf::Color::Blue);
   
   //Create Nodes
   TransformNode bodyNode(&bodyRect);
@@ -72,7 +77,15 @@ int main(int argc, char *argv)
   //AngleStuff
   int bodyMaxAngle = 40;
   float bodyCurrAngle = bodyMaxAngle / 2.0f;
-  float bodyTargAngle = rand() / bodyMaxAngle;
+  float bodyTargAngle = rand() % bodyMaxAngle;
+
+  int headMaxAngle = 60;
+  float headCurrAngle = headMaxAngle / 2.0f;
+  float headTargAngle = rand() % headMaxAngle;
+
+  int neckMaxAngle = 60;
+  float neckCurrAngle = neckMaxAngle / 2.0f;
+  float neckTargAngle = rand() % neckMaxAngle;
   
   int rightUpArmMaxAngle = 140;
   float rightUpArmCurrAngle = rightUpArmMaxAngle / 2.0f;
@@ -92,6 +105,8 @@ int main(int argc, char *argv)
 
   //Angles "speeds"
   float bodySpeed = 15.0f;
+  float neckSpeed = 20.0f;
+  float headSpeed = 20.0f;
   float angleSpeed = 75.0f;
 
   sf::Event evt;
@@ -106,6 +121,33 @@ int main(int argc, char *argv)
     }
 
     // do stuff.
+	//Rotate the head
+	if (headCurrAngle < headTargAngle)
+	{
+		float currentRotate = headSpeed * deltaTime;
+		headCircle.rotate(currentRotate);
+		headCurrAngle += currentRotate;
+		if (headCurrAngle > headTargAngle)
+		{
+			headTargAngle = rand() % headMaxAngle;
+		}
+	}
+	else if (headCurrAngle > headTargAngle)
+	{
+		float currentRotate = -(headSpeed * deltaTime);
+		headCircle.rotate(currentRotate);
+		headCurrAngle += currentRotate;
+		if (headCurrAngle < headTargAngle)
+		{
+			headTargAngle = rand() % headMaxAngle;
+		}
+
+	}
+	else
+	{
+		headTargAngle = rand() % headMaxAngle;
+	}
+
 	//Rotate the body
 	if (bodyCurrAngle < bodyTargAngle)
 	{
@@ -131,6 +173,33 @@ int main(int argc, char *argv)
 	else
 	{
 		bodyTargAngle = rand() % bodyMaxAngle;
+	}
+
+	//Rotate the neck
+	if (neckCurrAngle < neckTargAngle)
+	{
+		float currentRotate = neckSpeed * deltaTime;
+		neckRect.rotate(currentRotate);
+		neckCurrAngle += currentRotate;
+		if (neckCurrAngle > neckTargAngle)
+		{
+			neckTargAngle = rand() % neckMaxAngle;
+		}
+	}
+	else if (neckCurrAngle > neckTargAngle)
+	{
+		float currentRotate = -(neckSpeed * deltaTime);
+		neckRect.rotate(currentRotate);
+		neckCurrAngle += currentRotate;
+		if (neckCurrAngle < neckTargAngle)
+		{
+			neckTargAngle = rand() % neckMaxAngle;
+		}
+
+	}
+	else
+	{
+		neckTargAngle = rand() % neckMaxAngle;
 	}
 
 	//Rotate Right Upper Arm
