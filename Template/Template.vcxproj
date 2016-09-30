@@ -22,6 +22,7 @@
     <ProjectGuid>{7EDA4C17-3F05-4586-9105-DA9F87355D3D}</ProjectGuid>
     <RootNamespace>Project1</RootNamespace>
     <ProjectName>Template</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -133,6 +134,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TransformNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TransformNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
