@@ -104,10 +104,13 @@ int main(int argc, char *argv)
   float leftLowArmTargAngle = rand() % leftUpArmMaxAngle;
 
   //Angles "speeds"
-  float bodySpeed = 15.0f;
-  float neckSpeed = 20.0f;
-  float headSpeed = 20.0f;
-  float angleSpeed = 75.0f;
+  float bodySpeed = rand() % 10 + 10;
+  float neckSpeed = rand() % 20 + 20;
+  float headSpeed = rand() % 20 + 20;
+  float leftUpperArmSpeed = rand() % 50 + 40;
+  float leftLowerArmSpeed = rand() % 50 + 40;
+  float rightUpperArmSpeed = rand() % 50 + 40;
+  float rightLowerArmSpeed = rand() % 50 + 40;
 
   sf::Event evt;
   sf::Clock appTimer;
@@ -130,6 +133,7 @@ int main(int argc, char *argv)
 		if (headCurrAngle > headTargAngle)
 		{
 			headTargAngle = rand() % headMaxAngle;
+			headSpeed = rand() % 20 + 20;
 		}
 	}
 	else if (headCurrAngle > headTargAngle)
@@ -140,12 +144,14 @@ int main(int argc, char *argv)
 		if (headCurrAngle < headTargAngle)
 		{
 			headTargAngle = rand() % headMaxAngle;
+			headSpeed = rand() % 20 + 20;
 		}
 
 	}
 	else
 	{
 		headTargAngle = rand() % headMaxAngle;
+		headSpeed = rand() % 20 + 20;
 	}
 
 	//Rotate the body
@@ -157,6 +163,7 @@ int main(int argc, char *argv)
 		if (bodyCurrAngle > bodyTargAngle)
 		{
 			bodyTargAngle = rand() % bodyMaxAngle;
+			bodySpeed = rand() % 10 + 10;
 		}
 	}
 	else if (bodyCurrAngle > bodyTargAngle)
@@ -167,12 +174,14 @@ int main(int argc, char *argv)
 		if (bodyCurrAngle < bodyTargAngle)
 		{
 			bodyTargAngle = rand() % bodyMaxAngle;
+			bodySpeed = rand() % 10 + 10;
 		}
 
 	}
 	else
 	{
 		bodyTargAngle = rand() % bodyMaxAngle;
+		bodySpeed = rand() % 10 + 10;
 	}
 
 	//Rotate the neck
@@ -184,6 +193,7 @@ int main(int argc, char *argv)
 		if (neckCurrAngle > neckTargAngle)
 		{
 			neckTargAngle = rand() % neckMaxAngle;
+			neckSpeed = rand() % 20 + 20;
 		}
 	}
 	else if (neckCurrAngle > neckTargAngle)
@@ -194,118 +204,132 @@ int main(int argc, char *argv)
 		if (neckCurrAngle < neckTargAngle)
 		{
 			neckTargAngle = rand() % neckMaxAngle;
+			neckSpeed = rand() % 20 + 20;
 		}
 
 	}
 	else
 	{
 		neckTargAngle = rand() % neckMaxAngle;
+		neckSpeed = rand() % 20 + 20;
 	}
 
 	//Rotate Right Upper Arm
 	if(rightUpArmCurrAngle < rightUpArmTargAngle)
 	{
-		float currentRotate = angleSpeed * deltaTime;
+		float currentRotate = rightUpperArmSpeed * deltaTime;
 		rightUpperArmRect.rotate(currentRotate);
 		rightUpArmCurrAngle += currentRotate;
 		if(rightUpArmCurrAngle > rightUpArmTargAngle)
 		{
 			rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+			rightUpperArmSpeed = rand() % 50 + 40;
 		}
 	} else if(rightUpArmCurrAngle > rightUpArmTargAngle)
 	{
-		float currentRotate = -(angleSpeed * deltaTime);
+		float currentRotate = -(rightUpperArmSpeed * deltaTime);
 		rightUpperArmRect.rotate(currentRotate);
 		rightUpArmCurrAngle += currentRotate;
 		if (rightUpArmCurrAngle < rightUpArmTargAngle)
 		{
 			rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+			rightUpperArmSpeed = rand() % 50 + 40;
 		}
 
 	} else
 	{
 		rightUpArmTargAngle = rand() % rightUpArmMaxAngle;
+		rightUpperArmSpeed = rand() % 50 + 40;
 	}
 
 	//Rotate Right Lowper Arm
 	if (rightLowArmCurrAngle < rightLowArmTargAngle)
 	{
-		float currentRotate = angleSpeed * deltaTime;
+		float currentRotate = rightLowerArmSpeed * deltaTime;
 		rightLowerArmRect.rotate(currentRotate);
 		rightLowArmCurrAngle += currentRotate;
 		if (rightLowArmCurrAngle > rightLowArmTargAngle)
 		{
 			rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+			rightLowerArmSpeed = rand() % 50 + 40;
 		}
 	}
 	else if (rightLowArmCurrAngle > rightLowArmTargAngle)
 	{
-		float currentRotate = -(angleSpeed * deltaTime);
+		float currentRotate = -(rightLowerArmSpeed * deltaTime);
 		rightLowerArmRect.rotate(currentRotate);
 		rightLowArmCurrAngle += currentRotate;
 		if (rightLowArmCurrAngle < rightLowArmTargAngle)
 		{
 			rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+			rightLowerArmSpeed = rand() % 50 + 40;
 		}
 
 	}
 	else
 	{
 		rightLowArmTargAngle = rand() % rightLowArmMaxAngle;
+		rightLowerArmSpeed = rand() % 50 + 40;
 	}
 
 	//Rotate Left Upper Arm
 	if (leftUpArmCurrAngle < leftUpArmTargAngle)
 	{
-		float currentRotate = angleSpeed * deltaTime;
+		float currentRotate = leftUpperArmSpeed * deltaTime;
 		leftUpperArmRect.rotate(currentRotate);
 		leftUpArmCurrAngle += currentRotate;
 		if (leftUpArmCurrAngle > leftUpArmTargAngle)
 		{
 			leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+			leftUpperArmSpeed = rand() % 50 + 40;
 		}
 	}
 	else if (leftUpArmCurrAngle > leftUpArmTargAngle)
 	{
-		float currentRotate = -(angleSpeed * deltaTime);
+		float currentRotate = -(leftUpperArmSpeed * deltaTime);
 		leftUpperArmRect.rotate(currentRotate);
 		leftUpArmCurrAngle += currentRotate;
 		if (leftUpArmCurrAngle < leftUpArmTargAngle)
 		{
 			leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+			leftUpperArmSpeed = rand() % 50 + 40;
 		}
 
 	}
 	else
 	{
 		leftUpArmTargAngle = rand() % leftUpArmMaxAngle;
+		leftUpperArmSpeed = rand() % 50 + 40;
 	}
 
 	//Rotate Left Lowper Arm
 	if (leftLowArmCurrAngle < leftLowArmTargAngle)
 	{
-		float currentRotate = angleSpeed * deltaTime;
+		float currentRotate = leftLowerArmSpeed * deltaTime;
 		leftLowerArmRect.rotate(currentRotate);
 		leftLowArmCurrAngle += currentRotate;
 		if (leftLowArmCurrAngle > leftLowArmTargAngle)
 		{
 			leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+			leftLowerArmSpeed = rand() % 50 + 40;
 		}
 	}
 	else if (leftLowArmCurrAngle > leftLowArmTargAngle)
 	{
-		float currentRotate = -(angleSpeed * deltaTime);
+		float currentRotate = -(leftLowerArmSpeed * deltaTime);
 		leftLowerArmRect.rotate(currentRotate);
 		leftLowArmCurrAngle += currentRotate;
 		if (leftLowArmCurrAngle < leftLowArmTargAngle)
 		{
 			leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+			leftLowerArmSpeed = rand() % 50 + 40;
 		}
 
 	}
 	else
 	{
 		leftLowArmTargAngle = rand() % leftLowArmMaxAngle;
+		leftLowerArmSpeed = rand() % 50 + 40;
 	}
 
     window.clear();
