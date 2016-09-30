@@ -336,7 +336,6 @@ int main(int argc, char *argv)
 
     //draw stuff
 	bodyNode.Draw(&window);
-	rightUpperArmNode.Draw(&window);
     window.display();
   }
 
