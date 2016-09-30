@@ -5,13 +5,13 @@ int main(int argc, char *argv)
 {
 	//Initial Values
 	sf::Vector2<float> bodySize(100.0f, 325.0f);
-	sf::Vector2<float> armSize(100.0f, 20.0f);
+	sf::Vector2<float> armSize(150.0f, 20.0f);
 	sf::Vector2<float> neckSize(35.0f, 25.0f);
 	float headSize = 75.0f;
 	std::size_t headPoints = 60;
 
 	//Create Window	
-  sf::RenderWindow window(sf::VideoMode(600, 600), "WackyInflatableMan", sf::Style::Titlebar | sf::Style::Close);
+  sf::RenderWindow window(sf::VideoMode(1000, 600), "WackyInflatableMan", sf::Style::Titlebar | sf::Style::Close);
 
   //create shapes
   sf::RectangleShape bodyRect(bodySize);
